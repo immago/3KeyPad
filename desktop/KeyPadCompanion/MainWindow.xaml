@@ -5,10 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyPadCompanion"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="275" Width="387">
     <Grid>
-        <Button Content="Configuration" Margin="667,10,10,0" VerticalAlignment="Top" Height="50" Click="ConfigurationButton_Click"/>
-        <Label x:Name="versionLabel" Content="Getting version..." HorizontalAlignment="Right" Margin="0,10,595,0" VerticalAlignment="Top" Width="195"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition Height="17"/>
+        </Grid.RowDefinitions>
+        <Button Content="Configuration" Margin="0,10,10,10" Click="ConfigurationButton_Click" HorizontalAlignment="Right" Width="77"/>
+        <Label x:Name="versionLabel" Content="Getting version..." Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Height="26" Width="99" Padding="0,0,0,0" VerticalContentAlignment="Center"/>
+        <GroupBox Header="Button #1" Grid.Row="1" FontSize="10">
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Rectangle x:Name="button1ColorRqctangle" Fill="Black" MouseUp="button1ColorRqctangle_MouseUp" Cursor="Hand"/>
+                <Grid Grid.Column="1" HorizontalAlignment="Left" Width="170">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Single click: None" Margin="5,0,0,0" Padding="0,0,0,0"/>
+                    <Label Content="Double click: None" Margin="5,0,0,0" Padding="0,0,0,0" Grid.Row="1"/>
+                    <Label Content="Long click: None" Margin="5,0,0,0" Padding="0,0,0,0" Grid.Row="2"/>
+                    <Button Grid.Column="1" Content="&gt;" Padding="0,0,0,0" FontWeight="Bold"/>
+                    <Button Grid.Column="1" Content="&gt;" Padding="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0" Grid.Row="1"/>
+                    <Button Grid.Column="1" Content="&gt;" Padding="0,0,0,0" FontWeight="Bold" Grid.Row="2" Margin="0,0,0,0"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Label x:Name="lastReceivedCommandLabel" Content="" Grid.Row="3" Width="387" Padding="5,0,5,5" Background="White" Foreground="#FFA1A1A1" FontSize="10" VerticalContentAlignment="Center"/>
 
     </Grid>
 </Window>
