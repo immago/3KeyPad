@@ -1,0 +1,19 @@
+﻿<Window x:Class="KeyPadCompanion.ConfigurationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KeyPadCompanion"
+        mc:Ignorable="d"
+        Title="ConfigurationWindow" Height="103" Width="321" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="saveButton" Content="Save" Margin="10,0,10,5" Click="SaveButton_Click" Grid.Row="1" IsEnabled="False"/>
+        <ComboBox x:Name="portsComboBox" Margin="77,0,10,0" VerticalAlignment="Center" Height="22" SelectionChanged="portsComboBox_SelectionChanged"/>
+        <Label Content="COM Port" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="28" Width="62"/>
+
+    </Grid>
+</Window>

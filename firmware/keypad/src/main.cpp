@@ -79,19 +79,22 @@ OneButton setupButton(byte pin) {
 void handleSinglePress(void *param) {
   OneButton button = *((OneButton*)param);
   Serial.print("sclick ");
-  Serial.println(getButtonIdentifier(button));
+  Serial.print(getButtonIdentifier(button));
+  Serial.print("\n");
 }
 
 void handleDoublePress(void *param) {
   OneButton button = *((OneButton*)param);
   Serial.print("dclick ");
-  Serial.println(getButtonIdentifier(button));
+  Serial.print(getButtonIdentifier(button));
+  Serial.print("\n");
 }
 
 void handleLongPress(void *param) {
   OneButton button = *((OneButton*)param);
   Serial.print("lclick ");
-  Serial.println(getButtonIdentifier(button));
+  Serial.print(getButtonIdentifier(button));
+  Serial.print("\n");
 }
 
 String getButtonIdentifier(OneButton& btn) {
@@ -163,7 +166,8 @@ void parseCommand(String input) {
 
 
 void sendVersion() {
-  Serial.println(FIRMWARE_VERSION);
+  Serial.print( (String)"ver " + FIRMWARE_VERSION);
+  Serial.print("\n");
 }
 
 void sendLedState(int ledIndex) {
@@ -185,7 +189,8 @@ void sendLedState(int ledIndex) {
 
   // led (N) (mode) (r) (g) (b) (speed)
   // led 1 1 255 255 255 255
-  Serial.println(resp);
+  Serial.print(resp);
+  Serial.print("\n");
 }
 
 // setled N mode r g b speed
