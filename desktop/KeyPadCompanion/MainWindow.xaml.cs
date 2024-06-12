@@ -28,6 +28,35 @@ namespace KeyPadCompanion
         {
             InitializeComponent();
             Restart();
+
+            AudioIOController a = new AudioIOController();
+            //a.GetInputDevices();
+            //a.test();
+
+            /*
+            var list = a.GetInputDevices();
+            foreach (var device in list)
+            {
+                Debug.WriteLine($"{device.DeviceFriendlyName} {device.ID}");
+            }*/
+
+            /*
+                Fifine (2- USB PnP Audio Device) {0.0.1.00000000}.{7350d454-5177-485c-8be3-0697eef0cc3a}
+                Barracuda X (Razer Barracuda X 2.4) {0.0.1.00000000}.{5ff58714-e131-40a0-a1cf-2edead9fb889}
+
+                Voicemeeter Out A4 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{001279dd-5baa-4816-a853-a78e217e579e}
+                Микрофон (Steam Streaming Microphone) {0.0.1.00000000}.{35b33186-dfe7-464d-96e5-7acb3a0ddf8f}
+                Voicemeeter Out B3 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{3f84283b-9695-447a-87ba-8be18b47f162}
+                Voicemeeter Out B1 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{42bbdbe2-a35c-413b-a4e5-05c6a4519820}
+                Voicemeeter Out A5 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{695d5c98-f741-47c6-8849-0f7f73de799a}
+                Voicemeeter Out A3 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{88eed62c-b7d3-4a64-95d6-7a233ef22dac}
+                Quest 2 Headset Microphone (Oculus Virtual Audio Device) {0.0.1.00000000}.{8b8b8cd7-079b-418a-9701-47f5e2831272}
+                Voicemeeter Out A1 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{941a19ab-97da-4aeb-8d41-f747816fef59}
+                Voicemeeter Out A2 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{c73c70e6-9760-44b3-b25c-9d4da19fe050}
+                Voicemeeter Out B2 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{dc8c193a-1388-498a-9ca4-e8f0cac5b919}
+            */
+            //a.setDefaultAudioDevice("{0.0.1.00000000}.{5ff58714-e131-40a0-a1cf-2edead9fb889}");
+            //a.setDefaultAudioDevice("{0.0.1.00000000}.{7350d454-5177-485c-8be3-0697eef0cc3a}");
         }
 
         private void ConfigurationButton_Click(object sender, RoutedEventArgs e)
