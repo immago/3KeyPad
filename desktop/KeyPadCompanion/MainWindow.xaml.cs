@@ -136,6 +136,11 @@ namespace KeyPadCompanion
         private void button1ColorRqctangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("TODO");
+
+            var window = new AudioInputsWindow();
+            window.Owner = this;
+            window.ShowDialog();
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -27,10 +28,16 @@ namespace KeyPadCompanion
         // Data
         public string? ComPortName;
 
+        // Active input devices id's list
+        [XmlArray("ActiveAudioInputDevices")]
+        [XmlArrayItem("ActiveAudioInputDevice")]
+        public List<string> ActiveAudioInputDevices = new List<string>();
+
         private Configuration() { }
 
         static public void Save()
         {
+
             XmlSerializer ser = new XmlSerializer(typeof(Configuration));
             // write
             using (var stream = File.Create(Configuration.filePath))
@@ -59,6 +66,7 @@ namespace KeyPadCompanion
         {
             //Get the values from info and assign them to the appropriate properties
             ComPortName = (string?)info.GetValue("ComPortName", typeof(string));
+            ActiveAudioInputDevices = (List<string>?)info.GetValue("ActiveAudioInputDevices", typeof(List<string>)) ?? new List<string>();
         }
 
         //Serialization function.
@@ -68,6 +76,7 @@ namespace KeyPadCompanion
             // read the values with the same name. For ex:- If you write EmpId as "EmployeeId"
             // then you should read the same with "EmployeeId"
             info.AddValue("ComPortName", ComPortName);
+            info.AddValue("ActiveAudioInputDevices", ActiveAudioInputDevices);
         }
     }
 }
