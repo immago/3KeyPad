@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace KeyPadCompanion
 {
@@ -28,6 +29,10 @@ namespace KeyPadCompanion
         {
             InitializeComponent();
             Restart();
+
+            //configuration.ComPortName = "Test";
+            //configuration.Save();
+            //var b = configuration.ComPortName;
 
             AudioIOController a = new AudioIOController();
             //a.GetInputDevices();
@@ -69,11 +74,11 @@ namespace KeyPadCompanion
 
         void Restart()
         {
-            string port = Properties.Settings.Default.ComPortName;
-            if (port.Length == 0) { return; }
+            var port = Configuration.instance.ComPortName;
+            if (port != null && port.Length == 0) { return; }
 
             communicationController?.Stop();
-            communicationController = new CommunicationController(port);
+            communicationController = new CommunicationController(port!);
             communicationController.OnVersionResponse += CommunicationController_OnVersionResponse;
             communicationController.OnLedResponse += CommunicationController_OnLedResponse;
             communicationController.OnButtonClick += CommunicationController_OnButtonClick;
