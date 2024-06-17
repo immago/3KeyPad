@@ -4,85 +4,16 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.Data.Model
 {
 
-    // Avaliable actions for buttons
+   
+
+   
+
+    
     [Serializable()]
-    public enum Actions
-    {
-        [EnumMember(Value = "None")]
-        None,
-
-        [EnumMember(Value = "SwitchAudioInput")]
-        SwitchAudioInput,
-
-        [EnumMember(Value = "SwitchAudioOutput")]
-        SwitchAudioOutput,
-
-        [EnumMember(Value = "MuteMicrophone")]
-        MuteMicrophone,
-
-        [EnumMember(Value = "EmulateKeyboard")]
-        EmulateKeyboard
-    }
-
-    // Button event types
-    public enum ButtonType
-    {
-        SinglePress,
-        DoublePress,
-        LongPress
-    }
-
-    // Button actions for different events
-    [Serializable()]
-    public class ButtonAction
-    {
-        public Actions SinglePress = Actions.None;
-        public Actions DoublePress = Actions.None;
-        public Actions LongPress = Actions.None;
-
-        public Actions GetValue(ButtonType type)
-        {
-            switch (type)
-            {
-                case ButtonType.SinglePress:
-                    return SinglePress;
-
-                case ButtonType.DoublePress:
-                    return DoublePress;
-
-                case ButtonType.LongPress:
-                    return LongPress;
-
-                default:
-                    return SinglePress;
-            }
-        }
-
-        public void SetValue(Actions value, ButtonType type) {
-            switch (type)
-            {
-                case ButtonType.SinglePress:
-                    SinglePress = value;
-                    break;
-
-                case ButtonType.DoublePress:
-                    DoublePress = value;
-                    break;
-
-                case ButtonType.LongPress:
-                    LongPress = value;
-                    break;
-            }
-        }
-    }
-
-
-
-    [Serializable()]
-    public class Configuration: ISerializable
+    public class Configuration : ISerializable
     {
         static private string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "KeyPadCompanion/Settings.xml");
 
@@ -123,9 +54,9 @@ namespace KeyPadCompanion
 
             XmlSerializer ser = new XmlSerializer(typeof(Configuration));
             // write
-            using (var stream = File.Create(Configuration.filePath))
+            using (var stream = File.Create(filePath))
             {
-                ser.Serialize(stream, Configuration.Instance);
+                ser.Serialize(stream, Instance);
             }
         }
 
@@ -134,11 +65,12 @@ namespace KeyPadCompanion
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(Configuration));
-                using (var stream = File.OpenRead(Configuration.filePath))
+                using (var stream = File.OpenRead(filePath))
                 {
-                    return ((Configuration?)ser.Deserialize(stream)) ?? new Configuration();
+                    return (Configuration?)ser.Deserialize(stream) ?? new Configuration();
                 }
-            }catch
+            }
+            catch
             {
                 return new Configuration();
             }
@@ -150,7 +82,7 @@ namespace KeyPadCompanion
             //Get the values from info and assign them to the appropriate properties
             ComPortName = (string?)info.GetValue("ComPortName", typeof(string));
             ActiveAudioInputDevices = (List<string>?)info.GetValue("ActiveAudioInputDevices", typeof(List<string>)) ?? new List<string>();
-            ButtonActions = (List<ButtonAction>?)info.GetValue("ButtonActions", typeof(List<ButtonAction>)) ?? new List<ButtonAction>{ new ButtonAction(), new ButtonAction(), new ButtonAction() };
+            ButtonActions = (List<ButtonAction>?)info.GetValue("ButtonActions", typeof(List<ButtonAction>)) ?? new List<ButtonAction> { new ButtonAction(), new ButtonAction(), new ButtonAction() };
         }
 
         //Serialization function.

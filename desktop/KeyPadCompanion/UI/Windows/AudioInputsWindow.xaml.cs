@@ -1,9 +1,11 @@
 ﻿using CoreAudio;
+using KeyPadCompanion.Data.Controllers;
+using KeyPadCompanion.Data.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.UI.Windows
 {
     public class AudioInputElement
     {

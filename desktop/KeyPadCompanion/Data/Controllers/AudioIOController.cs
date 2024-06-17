@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.Data.Controllers
 {
     public class AudioIOController
     {
-        
+
         public List<MMDevice> GetInputDevices()
         {
             MMDeviceEnumerator enumerator = new MMDeviceEnumerator(Guid.NewGuid());

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.Data.Controllers
 {
     // https://www.codeproject.com/Articles/5264831/How-to-Send-Inputs-using-Csharp
     //

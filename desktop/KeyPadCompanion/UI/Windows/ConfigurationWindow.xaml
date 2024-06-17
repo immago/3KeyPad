@@ -1,9 +1,9 @@
-﻿<Window x:Class="KeyPadCompanion.ConfigurationWindow"
+﻿<Window x:Class="KeyPadCompanion.UI.Windows.ConfigurationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KeyPadCompanion"
+        xmlns:local="clr-namespace:KeyPadCompanion.UI.Windows"
         mc:Ignorable="d"
         Title="ConfigurationWindow" Height="103" Width="321" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Grid>

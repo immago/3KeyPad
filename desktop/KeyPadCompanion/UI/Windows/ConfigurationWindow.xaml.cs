@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO.Ports;
 using System.Windows;
+using KeyPadCompanion.Data.Model;
 
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.UI.Windows
 {
     /// <summary>
     /// Interaction logic for ConfigurationWindow.xaml

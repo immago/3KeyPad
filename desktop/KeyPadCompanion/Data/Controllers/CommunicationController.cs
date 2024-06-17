@@ -3,7 +3,7 @@ using System.IO.Ports;
 using System.Diagnostics;
 using System.Threading;
 
-namespace KeyPadCompanion
+namespace KeyPadCompanion.Data.Controllers
 {
     class CommunicationController
     {
@@ -35,7 +35,7 @@ namespace KeyPadCompanion
             port.NewLine = "\n";
             port.DtrEnable = true;    // Data-terminal-ready
             port.RtsEnable = true;    // Request-to-send
-            
+
         }
 
         public void Start()
@@ -122,33 +122,33 @@ namespace KeyPadCompanion
                 // led (N) (mode) (r) (g) (b) (speed)
                 // led 1 1 255 255 255 255
 
-                int index = Int32.Parse(parts[1]);
-                int mode = Int32.Parse(parts[2]);
-                byte r = Byte.Parse(parts[3]);
-                byte g = Byte.Parse(parts[4]);
-                byte b = Byte.Parse(parts[5]);
-                int speed = Int32.Parse(parts[6]);
+                int index = int.Parse(parts[1]);
+                int mode = int.Parse(parts[2]);
+                byte r = byte.Parse(parts[3]);
+                byte g = byte.Parse(parts[4]);
+                byte b = byte.Parse(parts[5]);
+                int speed = int.Parse(parts[6]);
                 OnLedResponse?.Invoke(index, mode, r, g, b, speed);
             }
 
             // Single click
             if (command == "sclick" && parts.Length >= 2)
             {
-                int index = Int32.Parse(parts[1]);
+                int index = int.Parse(parts[1]);
                 OnButtonClick?.Invoke(ButtonClickType.Single, index);
             }
 
             // Double click
             if (command == "dclick" && parts.Length >= 2)
             {
-                int index = Int32.Parse(parts[1]);
+                int index = int.Parse(parts[1]);
                 OnButtonClick?.Invoke(ButtonClickType.Double, index);
             }
 
             // Long click
             if (command == "lclick" && parts.Length >= 2)
             {
-                int index = Int32.Parse(parts[1]);
+                int index = int.Parse(parts[1]);
                 OnButtonClick?.Invoke(ButtonClickType.Long, index);
             }
         }
