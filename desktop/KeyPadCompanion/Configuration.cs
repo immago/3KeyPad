@@ -6,13 +6,89 @@ using System.Xml.Serialization;
 
 namespace KeyPadCompanion
 {
+
+    // Avaliable actions for buttons
+    [Serializable()]
+    public enum Actions
+    {
+        [EnumMember(Value = "None")]
+        None,
+
+        [EnumMember(Value = "SwitchAudioInput")]
+        SwitchAudioInput,
+
+        [EnumMember(Value = "SwitchAudioOutput")]
+        SwitchAudioOutput,
+
+        [EnumMember(Value = "MuteMicrophone")]
+        MuteMicrophone,
+
+        [EnumMember(Value = "EmulateKeyboard")]
+        EmulateKeyboard
+    }
+
+    // Button event types
+    public enum ButtonType
+    {
+        SinglePress,
+        DoublePress,
+        LongPress
+    }
+
+    // Button actions for different events
+    [Serializable()]
+    public class ButtonAction
+    {
+        public Actions SinglePress = Actions.None;
+        public Actions DoublePress = Actions.None;
+        public Actions LongPress = Actions.None;
+
+        public Actions GetValue(ButtonType type)
+        {
+            switch (type)
+            {
+                case ButtonType.SinglePress:
+                    return SinglePress;
+
+                case ButtonType.DoublePress:
+                    return DoublePress;
+
+                case ButtonType.LongPress:
+                    return LongPress;
+
+                default:
+                    return SinglePress;
+            }
+        }
+
+        public void SetValue(Actions value, ButtonType type) {
+            switch (type)
+            {
+                case ButtonType.SinglePress:
+                    SinglePress = value;
+                    break;
+
+                case ButtonType.DoublePress:
+                    DoublePress = value;
+                    break;
+
+                case ButtonType.LongPress:
+                    LongPress = value;
+                    break;
+            }
+        }
+    }
+
+
+
     [Serializable()]
     public class Configuration: ISerializable
     {
         static private string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "KeyPadCompanion/Settings.xml");
 
+        // Sngleton instance
         private static Configuration? _instance;
-        public static Configuration instance
+        public static Configuration Instance
         {
             get
             {
@@ -33,6 +109,13 @@ namespace KeyPadCompanion
         [XmlArrayItem("ActiveAudioInputDevice")]
         public List<string> ActiveAudioInputDevices = new List<string>();
 
+        // Actions for buttons 0..2
+        [XmlArray("ButtonActions")]
+        [XmlArrayItem("ButtonAction")]
+        public List<ButtonAction> ButtonActions = new List<ButtonAction>();
+
+
+
         private Configuration() { }
 
         static public void Save()
@@ -42,7 +125,7 @@ namespace KeyPadCompanion
             // write
             using (var stream = File.Create(Configuration.filePath))
             {
-                ser.Serialize(stream, Configuration.instance);
+                ser.Serialize(stream, Configuration.Instance);
             }
         }
 
@@ -67,6 +150,7 @@ namespace KeyPadCompanion
             //Get the values from info and assign them to the appropriate properties
             ComPortName = (string?)info.GetValue("ComPortName", typeof(string));
             ActiveAudioInputDevices = (List<string>?)info.GetValue("ActiveAudioInputDevices", typeof(List<string>)) ?? new List<string>();
+            ButtonActions = (List<ButtonAction>?)info.GetValue("ButtonActions", typeof(List<ButtonAction>)) ?? new List<ButtonAction>{ new ButtonAction(), new ButtonAction(), new ButtonAction() };
         }
 
         //Serialization function.
@@ -77,6 +161,7 @@ namespace KeyPadCompanion
             // then you should read the same with "EmployeeId"
             info.AddValue("ComPortName", ComPortName);
             info.AddValue("ActiveAudioInputDevices", ActiveAudioInputDevices);
+            info.AddValue("ButtonActions", ButtonActions);
         }
     }
 }

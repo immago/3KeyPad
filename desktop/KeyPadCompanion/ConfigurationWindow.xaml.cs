@@ -23,7 +23,7 @@ namespace KeyPadCompanion
             }
 
             // Load
-            var savedPortName = Configuration.instance.ComPortName;
+            var savedPortName = Configuration.Instance.ComPortName;
             int index = ports.FindIndex(str => (str == savedPortName));
             if (index >= 0)
             {
@@ -36,7 +36,7 @@ namespace KeyPadCompanion
         {
             if (portsComboBox.SelectedIndex >= 0)
             {
-                Configuration.instance.ComPortName = portsComboBox.SelectedItem.ToString();
+                Configuration.Instance.ComPortName = portsComboBox.SelectedItem.ToString();
                 Configuration.Save();
                 Close();
             }

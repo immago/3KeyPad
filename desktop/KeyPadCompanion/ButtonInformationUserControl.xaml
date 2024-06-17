@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="KeyPadCompanion.ButtonInformationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KeyPadCompanion"
+             mc:Ignorable="d" Height="45" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle x:Name="ColorRectangle" Fill="Black" MouseUp="ColorRectangle_MouseUp" Cursor="Hand"/>
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Width="200">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label x:Name="SingleClickLabel" Content="Single click: None" Margin="5,0,0,0" Padding="0,0,0,0" FontSize="11"/>
+                <Label x:Name="DoubleClickLabel" Content="Double click: None" Margin="5,0,0,0" Padding="0,0,0,0" Grid.Row="1" FontSize="11"/>
+                <Label x:Name="LongClickLabel" Content="Long click: None" Margin="5,0,0,0" Padding="0,0,0,0" Grid.Row="2" FontSize="11"/>
+                <Button x:Name="SingleClickConfigurationButton" Grid.Column="1" Content="➜" Padding="0,0,0,0" FontWeight="Bold" Click="SingleClickConfigurationButton_Click"/>
+                <Button x:Name="DoubleClickConfigurationButton" Grid.Column="1" Content="➜" Padding="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0" Grid.Row="1" Click="DoubleClickConfigurationButton_Click"/>
+                <Button x:Name="LongClickConfigurationButton" Grid.Column="1" Content="➜" Padding="0,0,0,0" FontWeight="Bold" Grid.Row="2" Margin="0,0,0,0" Click="LongClickConfigurationButton_Click"/>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -74,7 +74,7 @@ namespace KeyPadCompanion
 
         void Restart()
         {
-            var port = Configuration.instance.ComPortName;
+            var port = Configuration.Instance.ComPortName;
             if (port != null && port.Length == 0) { return; }
 
             communicationController?.Stop();
@@ -120,7 +120,7 @@ namespace KeyPadCompanion
                 // Button 1
                 if (index == 0)
                 {
-                    button1ColorRqctangle.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
+                    //button1ColorRqctangle.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
                 }
             });
         }
@@ -131,16 +131,6 @@ namespace KeyPadCompanion
             {
                 versionLabel.Content = $"ver: {version}";
             });
-        }
-
-        private void button1ColorRqctangle_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Debug.WriteLine("TODO");
-
-            var window = new AudioInputsWindow();
-            window.Owner = this;
-            window.ShowDialog();
-            
         }
     }
 }
