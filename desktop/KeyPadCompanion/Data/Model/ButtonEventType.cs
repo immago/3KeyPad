@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace KeyPadCompanion.Data.Model
 {
     // Button event types
-    public enum ButtonType
+    public enum ButtonEventType
     {
         SinglePress,
         DoublePress,

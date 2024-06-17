@@ -42,33 +42,33 @@ namespace KeyPadCompanion.UI.Controls
 
         private void LoadActions()
         {
-            var singleClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonType.SinglePress);
+            var singleClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonEventType.SinglePress);
             SingleClickLabel.Content = $"Single click: {GetActionName(singleClickAction)}";
 
-            var doubleClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonType.DoublePress);
+            var doubleClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonEventType.DoublePress);
             DoubleClickLabel.Content = $"Double click: {GetActionName(doubleClickAction)}";
 
-            var longClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonType.LongPress);
+            var longClickAction = Configuration.Instance.ButtonActions[buttonIndex].GetValue(ButtonEventType.LongPress);
             LongClickLabel.Content = $"Long click: {GetActionName(longClickAction)}";
         }
 
         private void SingleClickConfigurationButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ActionsWindow(buttonIndex, ButtonType.SinglePress);
+            var window = new ActionsWindow(buttonIndex, ButtonEventType.SinglePress);
             window.ShowDialog();
             LoadActions();
         }
 
         private void DoubleClickConfigurationButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ActionsWindow(buttonIndex, ButtonType.DoublePress);
+            var window = new ActionsWindow(buttonIndex, ButtonEventType.DoublePress);
             window.ShowDialog();
             LoadActions();
         }
 
         private void LongClickConfigurationButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ActionsWindow(buttonIndex, ButtonType.LongPress);
+            var window = new ActionsWindow(buttonIndex, ButtonEventType.LongPress);
             window.ShowDialog();
             LoadActions();
         }

@@ -13,6 +13,7 @@ namespace KeyPadCompanion.UI.Windows
     {
 
         private CommunicationController? communicationController;
+        private ActionsController actionsController = new ActionsController();
 
         public MainWindow()
         {
@@ -81,20 +82,25 @@ namespace KeyPadCompanion.UI.Windows
             communicationController.SetLed(2, 0, 0, 50, 255, 1000);
         }
 
-        private void CommunicationController_OnButtonClick(CommunicationController.ButtonClickType type, int index)
+        private void CommunicationController_OnButtonClick(ButtonEventType type, int index)
         {
+
+            // Perform action
+            actionsController.PerformAction(type, index);
+
+            // Show log
             Application.Current.Dispatcher.Invoke(() =>
             {
                 string text = $"[{DateTime.Now.ToString("dd/MM/yy HH:mm")}] ";
                 switch (type)
                 {
-                    case CommunicationController.ButtonClickType.Single:
+                    case ButtonEventType.SinglePress:
                         text += $"Button #{index} single click";
                         break;
-                    case CommunicationController.ButtonClickType.Double:
+                    case ButtonEventType.DoublePress:
                         text += $"Button #{index} double click";
                         break;
-                    case CommunicationController.ButtonClickType.Long:
+                    case ButtonEventType.LongPress:
                         text += $"Button #{index} long click";
                         break;
                 }

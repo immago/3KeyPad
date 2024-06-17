@@ -2,17 +2,12 @@
 using System.IO.Ports;
 using System.Diagnostics;
 using System.Threading;
+using KeyPadCompanion.Data.Model;
 
 namespace KeyPadCompanion.Data.Controllers
 {
     class CommunicationController
     {
-        public enum ButtonClickType
-        {
-            Single,
-            Double,
-            Long
-        }
 
         // Version
         public delegate void VersionResponseHandler(string version);
@@ -23,7 +18,7 @@ namespace KeyPadCompanion.Data.Controllers
         public event LedResponseHandler? OnLedResponse;
 
         // Button
-        public delegate void ButtonClickHandler(ButtonClickType type, int index);
+        public delegate void ButtonClickHandler(ButtonEventType type, int index);
         public event ButtonClickHandler? OnButtonClick;
 
         private SerialPort? port;
@@ -120,7 +115,7 @@ namespace KeyPadCompanion.Data.Controllers
             if (command == "led" && parts.Length >= 7)
             {
                 // led (N) (mode) (r) (g) (b) (speed)
-                // led 1 1 255 255 255 255
+                // led 0 1 255 255 255 255
 
                 int index = int.Parse(parts[1]);
                 int mode = int.Parse(parts[2]);
@@ -135,21 +130,21 @@ namespace KeyPadCompanion.Data.Controllers
             if (command == "sclick" && parts.Length >= 2)
             {
                 int index = int.Parse(parts[1]);
-                OnButtonClick?.Invoke(ButtonClickType.Single, index);
+                OnButtonClick?.Invoke(ButtonEventType.SinglePress, index);
             }
 
             // Double click
             if (command == "dclick" && parts.Length >= 2)
             {
                 int index = int.Parse(parts[1]);
-                OnButtonClick?.Invoke(ButtonClickType.Double, index);
+                OnButtonClick?.Invoke(ButtonEventType.DoublePress, index);
             }
 
             // Long click
             if (command == "lclick" && parts.Length >= 2)
             {
                 int index = int.Parse(parts[1]);
-                OnButtonClick?.Invoke(ButtonClickType.Long, index);
+                OnButtonClick?.Invoke(ButtonEventType.LongPress, index);
             }
         }
     }

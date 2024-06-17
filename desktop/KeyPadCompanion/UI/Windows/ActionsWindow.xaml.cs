@@ -9,9 +9,9 @@ namespace KeyPadCompanion.UI.Windows
     public partial class ActionsWindow : Window
     {
         private int buttonIndex = 0;
-        private ButtonType buttonType = ButtonType.SinglePress;
+        private ButtonEventType buttonType = ButtonEventType.SinglePress;
 
-        public ActionsWindow(int buttonIndex, ButtonType buttonType)
+        public ActionsWindow(int buttonIndex, ButtonEventType buttonType)
         {
             this.buttonIndex = buttonIndex;
             this.buttonType = buttonType;

@@ -100,13 +100,13 @@ void handleLongPress(void *param) {
 String getButtonIdentifier(OneButton& btn) {
 
   if (btn.pin() == button1.pin()) {
-    return "1";
+    return "0";
   }
   if (btn.pin() == button2.pin()) {
-    return "2";
+    return "1";
   }
   if (btn.pin() == button3.pin()) {
-    return "3";
+    return "2";
   }
 
   return "unknown";
@@ -188,7 +188,7 @@ void sendLedState(int ledIndex) {
   resp += (" " + String(speed)); // Speed
 
   // led (N) (mode) (r) (g) (b) (speed)
-  // led 1 1 255 255 255 255
+  // led 0 1 255 255 255 255
   Serial.print(resp);
   Serial.print("\n");
 }

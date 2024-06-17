@@ -14,17 +14,17 @@ namespace KeyPadCompanion.Data.Model
         public Actions DoublePress = Actions.None;
         public Actions LongPress = Actions.None;
 
-        public Actions GetValue(ButtonType type)
+        public Actions GetValue(ButtonEventType type)
         {
             switch (type)
             {
-                case ButtonType.SinglePress:
+                case ButtonEventType.SinglePress:
                     return SinglePress;
 
-                case ButtonType.DoublePress:
+                case ButtonEventType.DoublePress:
                     return DoublePress;
 
-                case ButtonType.LongPress:
+                case ButtonEventType.LongPress:
                     return LongPress;
 
                 default:
@@ -32,19 +32,19 @@ namespace KeyPadCompanion.Data.Model
             }
         }
 
-        public void SetValue(Actions value, ButtonType type)
+        public void SetValue(Actions value, ButtonEventType type)
         {
             switch (type)
             {
-                case ButtonType.SinglePress:
+                case ButtonEventType.SinglePress:
                     SinglePress = value;
                     break;
 
-                case ButtonType.DoublePress:
+                case ButtonEventType.DoublePress:
                     DoublePress = value;
                     break;
 
-                case ButtonType.LongPress:
+                case ButtonEventType.LongPress:
                     LongPress = value;
                     break;
             }
