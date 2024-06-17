@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Media;
 using KeyPadCompanion.Data.Controllers;
 using KeyPadCompanion.Data.Model;
 
@@ -22,7 +23,7 @@ namespace KeyPadCompanion.UI.Windows
             //configuration.Save();
             //var b = configuration.ComPortName;
 
-            AudioIOController a = new AudioIOController();
+            //AudioIOController a = new AudioIOController();
             //a.GetInputDevices();
             //a.test();
 
@@ -108,7 +109,19 @@ namespace KeyPadCompanion.UI.Windows
                 // Button 1
                 if (index == 0)
                 {
-                    //button1ColorRqctangle.Fill = new SolidColorBrush(Color.FromRgb(r, g, b));
+                    Button1Control.SetLed(Color.FromRgb(r, g, b), speed, mode);
+                }
+
+                // Button 2
+                if (index == 1)
+                {
+                    Button2Control.SetLed(Color.FromRgb(r, g, b), speed, mode); ;
+                }
+
+                // Button 3
+                if (index == 2)
+                {
+                    Button3Control.SetLed(Color.FromRgb(r, g, b), speed, mode);
                 }
             });
         }

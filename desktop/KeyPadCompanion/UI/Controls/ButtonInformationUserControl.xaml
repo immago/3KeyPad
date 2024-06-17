@@ -12,6 +12,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Rectangle x:Name="ColorRectangle" Fill="Black" MouseUp="ColorRectangle_MouseUp" Cursor="Hand"/>
+            <Label x:Name="LedSpeedLabel" Content="S: 000" Foreground="White" Background="#B2000000" HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="0,0,0,0" FontSize="7" />
+            <Label x:Name="LedModeLabel" Content="M: 000" Foreground="White" Background="#B2000000" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,0,0,0" FontSize="7" />
             <Grid Grid.Column="1" HorizontalAlignment="Left" Width="200">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

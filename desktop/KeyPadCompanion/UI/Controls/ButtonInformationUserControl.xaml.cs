@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using KeyPadCompanion.Data.Model;
 using KeyPadCompanion.UI.Windows;
 
@@ -20,6 +21,13 @@ namespace KeyPadCompanion.UI.Controls
         public ButtonInformationUserControl()
         {
             InitializeComponent();
+        }
+
+        public void SetLed(Color color, int speed, int mode)
+        {
+            LedSpeedLabel.Content = $"S:{speed}";
+            LedModeLabel.Content = $"M:{mode}";
+            ColorRectangle.Fill = new SolidColorBrush(color);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
