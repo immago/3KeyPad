@@ -17,6 +17,9 @@ namespace KeyPadCompanion.UI.Controls
     {
 
         private int buttonIndex = 0;
+        private Color color = Color.FromRgb(0,0,0);
+        private int speed = 0;
+        private int mode = 0;
 
         public ButtonInformationUserControl()
         {
@@ -25,6 +28,10 @@ namespace KeyPadCompanion.UI.Controls
 
         public void SetLed(Color color, int speed, int mode)
         {
+            this.color = color;
+            this.speed = speed;
+            this.mode = mode;
+
             LedSpeedLabel.Content = $"S:{speed}";
             LedModeLabel.Content = $"M:{mode}";
             ColorRectangle.Fill = new SolidColorBrush(color);
@@ -75,7 +82,13 @@ namespace KeyPadCompanion.UI.Controls
 
         private void ColorRectangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Debug.WriteLine("TODO");
+            var window = new LedConfigurationWindow(color, speed, mode);
+            window.ShowDialog();
+
+            Debug.WriteLine("TODO: Save LED settings");
+            Debug.WriteLine(window.Color);
+            Debug.WriteLine(window.Speed);
+            Debug.WriteLine(window.Mode);
         }
 
 
