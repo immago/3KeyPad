@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using KeyPadCompanion.Data;
 
 
 namespace KeyPadCompanion.UI.Windows
@@ -22,7 +23,7 @@ namespace KeyPadCompanion.UI.Windows
         public LedConfigurationWindow(Color color, int speed, int mode)
         {
             InitializeComponent();
-            HexColorTextBox.Text = $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+            HexColorTextBox.Text = color.HexColor();
             SpeedTextBox.Text = $"{speed}";
             UpdateColorPreview();
 

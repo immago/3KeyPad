@@ -82,6 +82,7 @@ namespace KeyPadCompanion.UI.Controls
 
         private void ColorRectangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            /*
             var window = new LedConfigurationWindow(color, speed, mode);
             window.ShowDialog();
 
@@ -89,6 +90,10 @@ namespace KeyPadCompanion.UI.Controls
             Debug.WriteLine(window.Color);
             Debug.WriteLine(window.Speed);
             Debug.WriteLine(window.Mode);
+            */
+            var window = new ButtonLedConfigurationWindow();
+            window.ShowDialog();
+            
         }
 
 
