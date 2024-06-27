@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KeyPadCompanion.UI.Windows"
         xmlns:controls="clr-namespace:KeyPadCompanion.UI.Controls"
         mc:Ignorable="d"
-        Title="KeyPad Settings" Width="300" WindowStartupLocation="CenterScreen" SizeToContent="Height" d:DesignHeight="310">
+        Title="KeyPad Settings" Width="300" WindowStartupLocation="CenterScreen" SizeToContent="Height" d:DesignHeight="310" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

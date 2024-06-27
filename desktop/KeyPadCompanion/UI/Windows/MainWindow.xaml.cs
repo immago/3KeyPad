@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using KeyPadCompanion.Data.Controllers;
@@ -19,14 +20,15 @@ namespace KeyPadCompanion.UI.Windows
         public MainWindow()
         {
             InitializeComponent();
-            Restart();
-        }
 
-        private void ConfigurationButton_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new ConfigurationWindow();
-            window.Owner = this;
-            window.ShowDialog();
+            // Tray icon
+            System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
+            ni.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);//new System.Drawing.Icon("Main.ico");
+            ni.Visible = true;
+            ni.DoubleClick += ShowFromTray;
+            ni.Click += ShowFromTray;
+
+            // Initial logic
             Restart();
         }
 
@@ -49,10 +51,6 @@ namespace KeyPadCompanion.UI.Windows
             communicationController.GetVersion();
             communicationController.GetLed(0);
 
-            // TODO;
-            //communicationController.SetLed(0, 0, 255, 50, 0, 1000);
-            //communicationController.SetLed(1, 0, 50, 255, 0, 1000);
-            //communicationController.SetLed(2, 0, 0, 50, 255, 1000);
 
             // Set leds for current state
             LedController_OnStateChangedHandler(0, ledController.StateFor(0));
@@ -61,6 +59,31 @@ namespace KeyPadCompanion.UI.Windows
 
         }
 
+
+        // Minimize, close
+        private void ShowFromTray(object? sender, EventArgs e)
+        {
+            Show();
+            WindowState = WindowState.Normal;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+
+        // Buttons
+        private void ConfigurationButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ConfigurationWindow();
+            window.Owner = this;
+            window.ShowDialog();
+            Restart();
+        }
+
+
+        // Led controller events
         private void LedController_OnStateChangedHandler(int index, ButtonLedConfigurationElement state)
         {
             var color = (Color)ColorConverter.ConvertFromString(state.HexColor);
@@ -70,6 +93,7 @@ namespace KeyPadCompanion.UI.Windows
             CommunicationController_OnLedResponse(index, state.Mode, color.R, color.G, color.B, state.Speed);
         }
 
+        // Communication controller events
         private void CommunicationController_OnButtonClick(ButtonEventType type, int index)
         {
 
@@ -127,5 +151,6 @@ namespace KeyPadCompanion.UI.Windows
                 versionLabel.Content = $"ver: {version}";
             });
         }
+
     }
 }
