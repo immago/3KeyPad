@@ -124,6 +124,10 @@ namespace KeyPadCompanion.Data.Model
         [XmlArrayItem("ButtonAction")]
         public List<ButtonAction> ButtonActions = new List<ButtonAction>();
 
+        // Conditions for button LEDs 0..2
+        [XmlArray("ButtonLedConfiguration")]
+        [XmlArrayItem("ButtonLedConfigurationElement")]
+        public List<List<ButtonLedConfigurationElement>> ButtonLedConfiguration = new List<List<ButtonLedConfigurationElement>>();
 
 
         private Configuration() { }
@@ -161,7 +165,21 @@ namespace KeyPadCompanion.Data.Model
             //Get the values from info and assign them to the appropriate properties
             ComPortName = (string?)info.GetValue("ComPortName", typeof(string));
             ActiveAudioInputDevices = (List<string>?)info.GetValue("ActiveAudioInputDevices", typeof(List<string>)) ?? new List<string>();
-            ButtonActions = (List<ButtonAction>?)info.GetValue("ButtonActions", typeof(List<ButtonAction>)) ?? new List<ButtonAction> { new ButtonAction(), new ButtonAction(), new ButtonAction() };
+            ButtonActions = (List<ButtonAction>?)info.GetValue("ButtonActions", typeof(List<ButtonAction>));
+            ButtonLedConfiguration = (List<List<ButtonLedConfigurationElement>>?)info.GetValue("ButtonLedConfiguration", typeof(List<List<ButtonLedConfigurationElement>>));
+
+            if (ButtonActions == null || ButtonActions.Count == 0)
+            {
+                ButtonActions = new List<ButtonAction> { new ButtonAction(), new ButtonAction(), new ButtonAction() };
+            }
+
+            if (ButtonLedConfiguration == null || ButtonLedConfiguration.Count == 0)
+            {
+                ButtonLedConfiguration = new List<List<ButtonLedConfigurationElement>>();
+                ButtonLedConfiguration.Add(new List<ButtonLedConfigurationElement> { new ButtonLedConfigurationElement() });
+                ButtonLedConfiguration.Add(new List<ButtonLedConfigurationElement> { new ButtonLedConfigurationElement() });
+                ButtonLedConfiguration.Add(new List<ButtonLedConfigurationElement> { new ButtonLedConfigurationElement() });
+            }
         }
 
         //Serialization function.
@@ -173,6 +191,7 @@ namespace KeyPadCompanion.Data.Model
             info.AddValue("ComPortName", ComPortName);
             info.AddValue("ActiveAudioInputDevices", ActiveAudioInputDevices);
             info.AddValue("ButtonActions", ButtonActions);
+            info.AddValue("ButtonLedConfiguration", ButtonLedConfiguration);
         }
     }
 }

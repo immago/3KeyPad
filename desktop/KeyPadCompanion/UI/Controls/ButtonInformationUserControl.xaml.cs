@@ -91,7 +91,7 @@ namespace KeyPadCompanion.UI.Controls
             Debug.WriteLine(window.Speed);
             Debug.WriteLine(window.Mode);
             */
-            var window = new ButtonLedConfigurationWindow();
+            var window = new ButtonLedConfigurationWindow(buttonIndex);
             window.ShowDialog();
             
         }

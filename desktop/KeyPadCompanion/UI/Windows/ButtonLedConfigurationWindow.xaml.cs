@@ -25,30 +25,17 @@ namespace KeyPadCompanion.UI.Windows
     public partial class ButtonLedConfigurationWindow : Window
     {
         
-        List<ButtonLedConfigurationElement> data = new List<ButtonLedConfigurationElement>();
+        private List<ButtonLedConfigurationElement> data = new List<ButtonLedConfigurationElement>();
+        private int index;
 
-        public ButtonLedConfigurationWindow()
+        public ButtonLedConfigurationWindow(int index)
         {
+            this.index = index;
+
+            // Deep copy data
+            data = Configuration.Instance.ButtonLedConfiguration[index].ConvertAll(o => o.Clone());
+
             InitializeComponent();
-
-            data.Add(new ButtonLedConfigurationElement() { 
-                IsEnabled = true, 
-                Condition = LedStateConditions.Default, 
-                HexColor = "#000000",
-                Mode = 0,
-                Speed = 1000  
-            });
-
-            data.Add(new ButtonLedConfigurationElement()
-            {
-                IsEnabled = true,
-                Condition = LedStateConditions.Default,
-                HexColor = "#111111",
-                Mode = 0,
-                Speed = 1000
-            });
-
-
             ConfigurationListView.ItemsSource = data;
         }
 
@@ -59,33 +46,32 @@ namespace KeyPadCompanion.UI.Windows
             if (ConfigurationListView.SelectedIndex < 0) return;
 
             var itemData = data[index];
-
-            var window = new LedConfigurationWindow((Color)ColorConverter.ConvertFromString(itemData.HexColor), itemData.Speed, itemData.Mode);
-            window.ShowDialog();
-
-            data[index].HexColor = window.Color.HexColor();
-            data[index].Speed = window.Speed;
-            data[index].Mode = window.Mode;
-            ConfigurationListView.Items.Refresh();
-
             ConfigurationListView.SelectedIndex = -1;
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var window = new LedConfigurationWindow((Color)ColorConverter.ConvertFromString(itemData.HexColor), itemData.Speed, itemData.Mode);
+                window.ShowDialog();
+
+                data[index].HexColor = window.Color.HexColor();
+                data[index].Speed = window.Speed;
+                data[index].Mode = window.Mode;
+                ConfigurationListView.Items.Refresh();
+            }));
+
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine(data);
+            Configuration.Instance.ButtonLedConfiguration[index] = data;
+            Configuration.Save();
+            DialogResult = true;
+            Close();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            data.Add(new ButtonLedConfigurationElement()
-            {
-                IsEnabled = true,
-                Condition = LedStateConditions.Default,
-                HexColor = "#ff0000",
-                Mode = 0,
-                Speed = 1000
-            });
+            data.Add(new ButtonLedConfigurationElement());
             ConfigurationListView.Items.Refresh();
         }
 
@@ -104,6 +90,13 @@ namespace KeyPadCompanion.UI.Windows
             int index = data.IndexOf(rowData);
             if (index >= data.Count-1) return;
             data.Move(rowData, index + 1);
+            ConfigurationListView.Items.Refresh();
+        }
+
+        private void DeketeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var rowData = (sender as Button).DataContext as ButtonLedConfigurationElement;
+            data.Remove(rowData);
             ConfigurationListView.Items.Refresh();
         }
     }

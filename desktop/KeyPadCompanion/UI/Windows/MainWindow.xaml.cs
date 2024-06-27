@@ -14,44 +14,12 @@ namespace KeyPadCompanion.UI.Windows
 
         private CommunicationController? communicationController;
         private ActionsController actionsController = new ActionsController();
+        private LEDController ledController = new LEDController();
 
         public MainWindow()
         {
             InitializeComponent();
             Restart();
-
-            //configuration.ComPortName = "Test";
-            //configuration.Save();
-            //var b = configuration.ComPortName;
-
-            //AudioIOController a = new AudioIOController();
-            //a.GetInputDevices();
-            //a.test();
-
-            /*
-            var list = a.GetInputDevices();
-            foreach (var device in list)
-            {
-                Debug.WriteLine($"{device.DeviceFriendlyName} {device.ID}");
-            }*/
-
-            /*
-                Fifine (2- USB PnP Audio Device) {0.0.1.00000000}.{7350d454-5177-485c-8be3-0697eef0cc3a}
-                Barracuda X (Razer Barracuda X 2.4) {0.0.1.00000000}.{5ff58714-e131-40a0-a1cf-2edead9fb889}
-
-                Voicemeeter Out A4 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{001279dd-5baa-4816-a853-a78e217e579e}
-                Микрофон (Steam Streaming Microphone) {0.0.1.00000000}.{35b33186-dfe7-464d-96e5-7acb3a0ddf8f}
-                Voicemeeter Out B3 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{3f84283b-9695-447a-87ba-8be18b47f162}
-                Voicemeeter Out B1 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{42bbdbe2-a35c-413b-a4e5-05c6a4519820}
-                Voicemeeter Out A5 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{695d5c98-f741-47c6-8849-0f7f73de799a}
-                Voicemeeter Out A3 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{88eed62c-b7d3-4a64-95d6-7a233ef22dac}
-                Quest 2 Headset Microphone (Oculus Virtual Audio Device) {0.0.1.00000000}.{8b8b8cd7-079b-418a-9701-47f5e2831272}
-                Voicemeeter Out A1 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{941a19ab-97da-4aeb-8d41-f747816fef59}
-                Voicemeeter Out A2 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{c73c70e6-9760-44b3-b25c-9d4da19fe050}
-                Voicemeeter Out B2 (VB-Audio Voicemeeter VAIO) {0.0.1.00000000}.{dc8c193a-1388-498a-9ca4-e8f0cac5b919}
-            */
-            //a.setDefaultAudioDevice("{0.0.1.00000000}.{5ff58714-e131-40a0-a1cf-2edead9fb889}");
-            //a.setDefaultAudioDevice("{0.0.1.00000000}.{7350d454-5177-485c-8be3-0697eef0cc3a}");
         }
 
         private void ConfigurationButton_Click(object sender, RoutedEventArgs e)
@@ -67,6 +35,11 @@ namespace KeyPadCompanion.UI.Windows
             var port = Configuration.Instance.ComPortName;
             if (port != null && port.Length == 0) { return; }
 
+            // LED contitions controller
+            ledController.OnStateChangedHandler += LedController_OnStateChangedHandler;
+            ledController.Start();
+
+            // Serial communication
             communicationController?.Stop();
             communicationController = new CommunicationController(port!);
             communicationController.OnVersionResponse += CommunicationController_OnVersionResponse;
@@ -77,9 +50,24 @@ namespace KeyPadCompanion.UI.Windows
             communicationController.GetLed(0);
 
             // TODO;
-            communicationController.SetLed(0, 0, 255, 50, 0, 1000);
-            communicationController.SetLed(1, 0, 50, 255, 0, 1000);
-            communicationController.SetLed(2, 0, 0, 50, 255, 1000);
+            //communicationController.SetLed(0, 0, 255, 50, 0, 1000);
+            //communicationController.SetLed(1, 0, 50, 255, 0, 1000);
+            //communicationController.SetLed(2, 0, 0, 50, 255, 1000);
+
+            // Set leds for current state
+            LedController_OnStateChangedHandler(0, ledController.StateFor(0));
+            LedController_OnStateChangedHandler(1, ledController.StateFor(1));
+            LedController_OnStateChangedHandler(2, ledController.StateFor(2));
+
+        }
+
+        private void LedController_OnStateChangedHandler(int index, ButtonLedConfigurationElement state)
+        {
+            var color = (Color)ColorConverter.ConvertFromString(state.HexColor);
+            communicationController?.SetLed(index, state.Mode, color.R, color.G, color.B, state.Speed);
+
+            // Update UI
+            CommunicationController_OnLedResponse(index, state.Mode, color.R, color.G, color.B, state.Speed);
         }
 
         private void CommunicationController_OnButtonClick(ButtonEventType type, int index)
