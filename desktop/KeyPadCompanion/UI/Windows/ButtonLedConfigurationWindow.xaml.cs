@@ -1,21 +1,11 @@
 ﻿using KeyPadCompanion.Data.Model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Media;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static KeyPadCompanion.Data.Model.ButtonLedConfigurationElement;
 using KeyPadCompanion.Data;
+
 
 namespace KeyPadCompanion.UI.Windows
 {
@@ -98,6 +88,26 @@ namespace KeyPadCompanion.UI.Windows
             var rowData = (sender as Button).DataContext as ButtonLedConfigurationElement;
             data.Remove(rowData);
             ConfigurationListView.Items.Refresh();
+        }
+
+        private void ConditionConfigButton_Click(object sender, RoutedEventArgs e)
+        {
+            var rowData = (sender as Button).DataContext as ButtonLedConfigurationElement;
+            int index = data.IndexOf(rowData);
+            if (index > data.Count - 1) return;
+
+            if (rowData.Condition == LedStateConditions.IsInputSelected)
+            {
+                var window = new AudioInputPickerWindow(rowData.InputDeviceId);
+                window.ShowDialog();
+                data[index].InputDeviceId = window.SelectedDeviceId;
+                ConfigurationListView.Items.Refresh();
+            }
+
+            if (!rowData.HasParameters)
+            {
+                MessageBox.Show("This setting does not have any parameters");
+            }
         }
     }
 }

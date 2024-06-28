@@ -23,7 +23,7 @@ namespace KeyPadCompanion.UI.Windows
 
             // Tray icon
             System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
-            ni.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);//new System.Drawing.Icon("Main.ico");
+            ni.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
             ni.Visible = true;
             ni.DoubleClick += ShowFromTray;
             ni.Click += ShowFromTray;

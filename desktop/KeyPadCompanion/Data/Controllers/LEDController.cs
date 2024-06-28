@@ -11,6 +11,7 @@ namespace KeyPadCompanion.Data.Controllers
         public delegate void StateChangedHandler(int index, ButtonLedConfigurationElement state);
         public event StateChangedHandler? OnStateChangedHandler;
 
+        private int timerDelay = 300;
         private Timer timer;
         private AudioIOController audioIOController = new AudioIOController();
         private List<ButtonLedConfigurationElement> currentLedStates; // Current led states in memory cache
@@ -27,7 +28,7 @@ namespace KeyPadCompanion.Data.Controllers
             // Create timer
             timer = new Timer();
             timer.Elapsed += new ElapsedEventHandler(TickEvent);
-            timer.Interval = 1000;
+            timer.Interval = timerDelay;
             TickEvent(null, null);
         }
 
@@ -97,6 +98,12 @@ namespace KeyPadCompanion.Data.Controllers
             {
                 var mic = audioIOController.GetCurrentInputDevice();
                 return mic.AudioEndpointVolume?.Mute ?? false;
+            }
+
+            if (led.Condition == LedStateConditions.IsInputSelected)
+            {
+                var mic = audioIOController.GetCurrentInputDevice();
+                return mic.ID == led.InputDeviceId;
             }
 
             return false; 
