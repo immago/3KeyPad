@@ -21,6 +21,10 @@ namespace KeyPadCompanion.Data.Controllers
         public delegate void ButtonClickHandler(ButtonEventType type, int index);
         public event ButtonClickHandler? OnButtonClick;
 
+        // Error
+        public delegate void ErrorOccuredHandler(Exception ex);
+        public event ErrorOccuredHandler? OnErrorOccured;
+
         private SerialPort? port;
 
         // - Public 
@@ -54,6 +58,7 @@ namespace KeyPadCompanion.Data.Controllers
             }
             catch (Exception ex)
             {
+                OnErrorOccured?.Invoke(ex);
                 Debug.WriteLine(ex.ToString());
             }
         }

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using KeyPadCompanion.Data.Controllers;
 using KeyPadCompanion.Data.Model;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace KeyPadCompanion.UI.Windows
 {
@@ -28,6 +29,8 @@ namespace KeyPadCompanion.UI.Windows
             ni.DoubleClick += ShowFromTray;
             ni.Click += ShowFromTray;
 
+            Hide();
+
             // Initial logic
             Restart();
         }
@@ -47,6 +50,7 @@ namespace KeyPadCompanion.UI.Windows
             communicationController.OnVersionResponse += CommunicationController_OnVersionResponse;
             communicationController.OnLedResponse += CommunicationController_OnLedResponse;
             communicationController.OnButtonClick += CommunicationController_OnButtonClick;
+            communicationController.OnErrorOccured += CommunicationController_OnErrorOccured;
             communicationController.Start();
             communicationController.GetVersion();
             communicationController.GetLed(0);
@@ -57,6 +61,13 @@ namespace KeyPadCompanion.UI.Windows
             LedController_OnStateChangedHandler(1, ledController.StateFor(1));
             LedController_OnStateChangedHandler(2, ledController.StateFor(2));
 
+        }
+
+        private void CommunicationController_OnErrorOccured(Exception ex)
+        {
+            new ToastContentBuilder()
+                .AddText($"Connection error\n {ex.ToString()}")
+                .Show();
         }
 
 
