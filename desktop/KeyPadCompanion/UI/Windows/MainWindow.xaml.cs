@@ -5,6 +5,7 @@ using System.Windows.Media;
 using KeyPadCompanion.Data.Controllers;
 using KeyPadCompanion.Data.Model;
 using Microsoft.Toolkit.Uwp.Notifications;
+using static System.Windows.Forms.AxHost;
 
 namespace KeyPadCompanion.UI.Windows
 {
@@ -29,10 +30,20 @@ namespace KeyPadCompanion.UI.Windows
             ni.DoubleClick += ShowFromTray;
             ni.Click += ShowFromTray;
 
+            // Shutdown event
+            Application.Current.SessionEnding += Application_SessionEnding;
+
             Hide();
 
             // Initial logic
             Restart();
+        }
+
+        void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
+        {
+            communicationController?.SetLed(0, 0, 0, 0, 0, 1000);
+            communicationController?.SetLed(1, 0, 0, 0, 0, 1000);
+            communicationController?.SetLed(2, 0, 0, 0, 0, 1000);
         }
 
         void Restart()

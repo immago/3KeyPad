@@ -100,8 +100,21 @@ namespace KeyPadCompanion.Data.Controllers
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (port == null) { return; }
+            if (!port.IsOpen) { return; }
 
-            string text = port.ReadLine();
+            string text = "";
+            try
+            {
+                text = port.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                //Debug.WriteLine(ex.ToString());
+                // Newer version of COM driver trow exception in first read for some reason
+                // older just otput some junk noise
+                return;
+            }
+            
             string[] parts = text.Split(' ');
 
             //Debug.WriteLine(text);
